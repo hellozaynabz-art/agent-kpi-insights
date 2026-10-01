@@ -39,7 +39,7 @@ Sample output: [`reports/sample_brief_rules.md`](reports/sample_brief_rules.md)
 
 ```bash
 make setup                 # install dependencies (requires uv)
-cp .env.example .env       # then add your ANTHROPIC_API_KEY
+cp .env.example .env       # add ANTHROPIC_API_KEY (a .env in any parent folder also works)
 make data                  # 5 months of daily KPIs with three planted incidents
 make brief                 # Claude investigates and writes reports/brief_<date>.md
 make brief-rules           # same analysis, rule-based wording, no API key
