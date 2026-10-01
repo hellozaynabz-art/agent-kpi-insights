@@ -1,0 +1,27 @@
+# Runs the agent every weekday morning and uploads the brief as a build artifact.
+# Add ANTHROPIC_API_KEY under Settings → Secrets and variables → Actions to enable the Claude brief;
+# without it the rule-based brief is produced.
+name: Daily KPI brief
+
+on:
+  schedule:
+    - cron: "0 13 * * 1-5"  # 13:00 UTC, Monday to Friday
+  workflow_dispatch:
+
+jobs:
+  brief:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync
+      - run: uv run python -m kpi_agent.data
+      - name: Write brief
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -n "$ANTHROPIC_API_KEY" ]; then uv run kpi-agent; else uv run kpi-agent --no-llm; fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kpi-brief
+          path: reports/brief_*.md
