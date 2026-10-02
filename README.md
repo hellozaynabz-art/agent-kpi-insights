@@ -6,6 +6,8 @@ Every morning someone asks "why did revenue drop yesterday?". This agent answers
 it detects anomalies in daily KPIs, drills into channels, regions and platforms to find the cause,
 and writes an executive brief with impact and next steps. It can run on a schedule in GitHub Actions.
 
+> **Live mode needs an Anthropic API key** (`ANTHROPIC_API_KEY`). Everything else (tests, CI, and the rule-based brief via `make brief-rules`) runs without one.
+
 ## How it works
 
 ```mermaid
